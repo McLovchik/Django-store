@@ -1,0 +1,12 @@
+{% for category in categories %}
+    <div class="CategoriesButton-link">
+        <a href="#">
+          <div class="CategoriesButton-icon">
+              <img src="{{ category.icon_url }}" alt="icon_category" style="width: 24px"/>
+          </div>
+          <span class="CategoriesButton-text">
+              {{ category.name }}
+          </span>
+        </a>
+    </div>
+{% endfor %}

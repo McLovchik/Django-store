@@ -1,0 +1,64 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+
+{% block title %}
+  Payment processing
+{% endblock %}
+
+{#{% block links_css %}#}
+{#    <link rel="stylesheet" href="{% static 'c_assets/css/c_extra.css' %}">#}
+{#{% endblock %}#}
+
+{% block main %}
+
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title">
+            ожидание оплаты
+          </h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item">
+                <a href="index.html">home</a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current">
+                <span>
+                  ожидание оплаты
+                </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="Section">
+      <div class="wrap">
+        <div class="ProgressPayment">
+          <div class="ProgressPayment-title">
+              Ждем подтверждения оплаты платежной системой
+          </div>
+          <div class="ProgressPayment-icon">
+            <div class="cssload-thecube">
+              <div class="cssload-cube cssload-c1"></div>
+              <div class="cssload-cube cssload-c2"></div>
+              <div class="cssload-cube cssload-c4"></div>
+              <div class="cssload-cube cssload-c3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+    <script>
+      window.setTimeout(function(){
+          window.location.href = "{% if result %}{% url 'payment-done' %}{% else %}{% url 'payment-canceled' %}{% endif %}";
+      }, 3000);
+    </script>
+
+{% endblock %}

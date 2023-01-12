@@ -1,0 +1,25 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+
+{% block title %}
+    Megano
+{% endblock %}
+
+
+{% block main %}
+
+    {% if random_categories %}
+        {% include 'products/elements/random_categories.html' %}
+    {% endif %}
+
+    {% if popular_products %}
+        {% include 'products/elements/popular_products.html' %}
+    {% endif %}
+
+    {% if limited_products %}
+        {% include 'products/elements/limited_products.html' %}
+    {% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,216 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+
+
+{% block title %}
+  Order
+{% endblock %}
+
+{% block links_css %}
+  <link rel="stylesheet" href="{% static 'c_assets/css/c_extra.css' %}">
+{% endblock %}
+
+
+{% block main %}
+
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title">
+              Заказ №{{ order.id }}
+          </h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item">
+                <a href="index.html">
+                    home
+                </a>
+            </li>
+            <li class="breadcrumbs-item">
+                <a href="{% url 'history-orders' %}">
+                    История заказов
+                </a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current">
+                <span>
+                  Заказ №{{ order.id }}
+                </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="Section">
+      <div class="wrap">
+        <div class="Section-content">
+          <div class="Orders">
+          </div>
+          <div class="Order">
+            <div class="Order-infoBlock">
+              <div class="Order-personal">
+                <div class="row">
+                  <div class="row-block">
+                    <div class="Order-info Order-info_date">
+                      <div class="Order-infoType">
+                          Order date:
+                      </div>
+                      <div class="Order-infoContent">
+                          {{ order.ordered }}
+                      </div>
+                    </div>
+                    <div class="Order-info">
+                      <div class="Order-infoType">
+                          Fullname
+                      </div>
+                      <div class="Order-infoContent">
+                          {{ order.fullname }}
+                      </div>
+                    </div>
+                    <div class="Order-info">
+                      <div class="Order-infoType">
+                          Phone:
+                      </div>
+                      <div class="Order-infoContent">
+                          {{ order.phone }}
+                      </div>
+                    </div>
+                    <div class="Order-info">
+                      <div class="Order-infoType">
+                          Email:
+                      </div>
+                      <div class="Order-infoContent">
+                          {{ order.email }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row-block">
+                    <div class="Order-info Order-info_delivery">
+                      <div class="Order-infoType">
+                          Delivery:
+                      </div>
+                      <div class="Order-infoContent">
+                        {% if order.delivery == 'reg' %}
+                          Regular delivery
+                        {% else %}
+                          Express delivery
+                        {% endif %}
+                      </div>
+                    </div>
+                    <div class="Order-info">
+                      <div class="Order-infoType">
+                          City:
+                      </div>
+                      <div class="Order-infoContent">
+                          {{ order.city }}
+                      </div>
+                    </div>
+                    <div class="Order-info">
+                      <div class="Order-infoType">
+                          Address:
+                      </div>
+                      <div class="Order-infoContent">
+                          {{ order.address }}
+                      </div>
+                    </div>
+                    <div class="Order-info Order-info_pay">
+                      <div class="Order-infoType">
+                          Payment:
+                      </div>
+                      <div class="Order-infoContent">
+                        {% if order.payment_method == 'card' %}
+                          Card
+                        {% else %}
+                          Random account
+                        {% endif %}
+                      </div>
+                    </div>
+                    <div class="Order-info Order-info_status">
+                      <div class="Order-infoType">
+                          Status:
+                      </div>
+                      <div class="Order-infoContent">
+                        {% if order.paid %}
+                          Paid
+                        {% else %}
+                          Not paid
+                        {% endif %}
+                      </div>
+                    </div>
+                    {% if order.payment_error %}
+                        <div class="Order-info Order-info_error">
+                          <div class="Order-infoType">
+                              Платеж не был обработан:
+                          </div>
+                          <div class="Order-infoContent">
+                              {{ order.payment_error }}
+                          </div>
+                        </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="Cart Cart_order">
+                <!-- Продукты в заказе -->
+                {% for product in order.order_products.all %}
+                    <div class="Cart-product">
+                      <div class="Cart-block Cart-block_row">
+                        <div class="Cart-block Cart-block_pict">
+                            <a class="Cart-pict" href="#">
+                                <img class="Cart-img"
+                                  src="
+                                  {% if product.product.image %}
+                                    {{ product.product.image.url }}
+                                  {% else %}
+                                    {% static 'assets/img/content/home/card.jpg' %}
+                                  {% endif %}
+                                  "
+                                  alt="card.jpg"/>
+                            </a>
+                        </div>
+                        <div class="Cart-block Cart-block_info">
+                            <a class="Cart-title" href="#">
+                                {{ product.product.name }}
+                            </a>
+                          <div class="Cart-desc">
+                              {{ product.product.description|truncatechars:160 }}
+                          </div>
+                        </div>
+                        <div class="Cart-block Cart-block_price">
+                          <div class="Cart-price">
+                              {{ product.product.price }}₽
+                          </div>
+                        </div>
+                      </div>
+                      <div class="Cart-block Cart-block_row">
+                        <div class="Cart-block Cart-block_amount">
+                            {{ product.quantity }} шт.
+                        </div>
+                      </div>
+                    </div>
+                {% endfor %}
+                <div class="Cart-total">
+                  <div class="Cart-block Cart-block_total">
+                    <strong class="Cart-title">
+                        Total:
+                        <span class="Cart-price">
+                            {{ order.final_total_sum }}₽
+                        </span>
+                    </strong>
+                  </div>
+                  {% if not order.paid %}
+                  <div class="Cart-block">
+                      <a class="btn btn_primary btn_lg" {% if order.payment_method == 'card' %}href="{% url 'payment-card' order.id %}" {% else %}href="{% url 'payment-account' order.id %}" {% endif %}>
+                          Pay
+                      </a>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

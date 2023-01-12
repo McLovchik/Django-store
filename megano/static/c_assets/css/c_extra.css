@@ -1,0 +1,66 @@
+.custom-wrap-for-form {
+    display: flex;
+    justify-content: center;
+}
+.custom-wrap-s-div-for-form {
+    width: 70%;
+}
+.custom-row-block-for-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.custom-wrap-s-div-for-login-form {
+    width: 40%;
+}
+
+.custom-form-group-for-login input {
+    width: 100%;
+}
+@media screen and (max-width: 990px) {
+    .Section_column .custom-wrap-for-login-form {
+        display: flex;
+    }
+    .custom-wrap-s-div-for-login-form {
+        width: 70%;
+    }
+
+}
+@media screen and (max-width: 466px) {
+    .custom-wrap-s-div-for-login-form {
+        width: 100%;
+    }
+    .custom-register-btn-for-login-page {
+        margin-top: 20px;
+    }
+    .custom-profile-btns-for-login-page {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.custom-Account-avatar {
+    max-height: fit-content;
+}
+.custom-Account-avatar img {
+    display: block;
+}
+
+.custom-form-input-for-detail-product-page {
+    width: 40% !important;
+}
+@media screen and (max-width: 1200px) {
+    .custom-form-input-for-detail-product-page {
+        width: 60% !important;
+    }
+}
+@media screen and (max-width: 800px) {
+    .custom-form-input-for-detail-product-page {
+        width: 100% !important;
+    }
+}
+
+.custom-Order-price {
+    font-size: 1.2em;
+}

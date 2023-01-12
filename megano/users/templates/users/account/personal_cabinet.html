@@ -1,0 +1,175 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+
+
+{% block title %}
+  Account
+{% endblock %}
+
+{% block links_css %}
+  <link rel="stylesheet" href="{% static 'c_assets/css/c_extra.css' %}">
+{% endblock %}
+
+
+{% block main %}
+
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title">
+            личный кабинет
+          </h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item">
+                <a href="index.html">home</a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current">
+                <span>
+                  личный кабинет
+                </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="Section Section_column Section_columnLeft">
+        <div class="wrap">
+
+            <div class="Section-column">
+                <div class="Section-columnSection">
+                    <header class="Section-header">
+                      <strong class="Section-title">Навигация
+                      </strong>
+                    </header>
+                    <div class="Section-columnContent">
+                      <div class="NavigateProfile">
+                        <ul class="menu menu_vt">
+                          <li class="menu-item_ACTIVE menu-item">
+                              <a class="menu-link" href="account.html">
+                                  Личный кабинет
+                              </a>
+                          </li>
+                          <li class="menu-item">
+                              <a class="menu-link" href="profile.html">
+                                  Профиль
+                              </a>
+                          </li>
+                          <li class="menu-item">
+                              <a class="menu-link" href="{% url 'history-orders' %}">
+                                  История заказов
+                              </a>
+                          </li>
+                          <li class="menu-item">
+                              <a class="menu-link" href="historyview.html">
+                                  История просмотра
+                              </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="Section-content">
+
+                <div class="Account">
+
+                    <div class="Account-group">
+                        {% if user.avatar_url %}
+                            <div class="Account-column">
+                                <div class="Account-avatar custom-Account-avatar">
+                                    <img src="{{ user.avatar_url }}" alt="avatar.jpg"/>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="Account-column">
+                            <div class="Account-name">
+                                {{ user.fullname }}
+                            </div>
+                            <a class="Account-editLink" href="{% url 'profile-edit' %}">
+                                Редактировать профиль
+                            </a>
+                        </div>
+                    </div>
+
+                    {% if last_order %}
+                        <div class="Account-group">
+                            <div class="Account-column Account-column_full">
+                              <div class="Order Order_anons">
+                                <div class="Order-personal">
+                                  <div class="row">
+                                    <div class="row-block">
+                                      <a class="Order-title" href="{% url 'history-order-detail' last_order.id %}">
+                                          Заказ&#32;
+                                        <span class="Order-numberOrder">№{{last_order.id}}</span>&#32;от&#32;
+                                        <span class="Order-dateOrder">{{last_order.ordered|date:"d.m.o"}}</span>
+                                      </a>
+                                      <div class="Account-editLink">
+                                          <a href="{% url 'history-orders' %}">
+                                              История заказов
+                                          </a>
+                                      </div>
+                                    </div>
+                                    <div class="row-block">
+                                      <div class="Order-info Order-info_delivery">
+                                        <div class="Order-infoType">
+                                            Type of delivery:
+                                        </div>
+                                        <div class="Order-infoContent">
+                                            {% if last_order.delivery == 'reg' %}
+                                              Regular delivery
+                                            {% else %}
+                                                Express delivery
+                                            {% endif %}
+                                        </div>
+                                      </div>
+                                      <div class="Order-info Order-info_pay">
+                                        <div class="Order-infoType">
+                                            Payment method:
+                                        </div>
+                                        <div class="Order-infoContent">
+                                            {% if last_order.payment_method == 'card' %}
+                                              Card
+                                            {% else %}
+                                              Cash
+                                            {% endif %}
+                                        </div>
+                                      </div>
+                                    <div class="Order-info">
+                                      <div class="Order-infoType">
+                                          Price:
+                                      </div>
+                                      <div class="Order-infoContent custom-Order-price">
+                                          {{ last_order.final_total_sum }}₽
+                                      </div>
+                                    </div>
+                                      <div class="Order-info Order-info_status">
+                                        <div class="Order-infoType">
+                                            Order Status:
+                                        </div>
+                                        <div class="Order-infoContent">
+                                            {% if last_order.paid %}
+                                                Paid
+                                            {% else %}
+                                                Not paid
+                                            {% endif %}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

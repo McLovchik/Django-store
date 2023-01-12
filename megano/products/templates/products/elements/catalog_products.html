@@ -1,0 +1,47 @@
+{% load static %}
+
+<div id="cards_with_pagination">
+    <div class="Cards" id="good_card">
+        {% for elem in page_obj %}
+            <div class="Card">
+                <a class="Card-picture" href="{% url 'product-detail' elem.slug %}">
+                    <img src="{{ elem.image_url }}" alt="card.jpg"/>
+                </a>
+                <div class="Card-content">
+                    <strong class="Card-title">
+                        <a href="{% url 'product-detail' elem.slug %}">
+                            {{ elem.name }}
+                        </a>
+                    </strong>
+                    <div class="Card-description">
+                        <div class="Card-cost">
+                            <span class="Card-price">
+                                {{ elem.price }}
+                            </span>
+                        </div>
+                        <div class="Card-category">
+                            {{elem.category}}
+                        </div>
+                        {% if elem.quantity > 0 %}
+                            <div class="Card-hover">
+                                <form action="{% url 'add-product-in-cart' product_id=elem.id %}" method="post">
+                                    {% csrf_token %}
+                                    <input style="display: none;" class="Amount-input form-input" name="amount" type="text" value="1"/>
+
+                                    <button style="border-width: 0; cursor: pointer" class="Card-btn" type="submit">
+                                        <img src="{% static 'assets/img/icons/card/cart.svg' %}" alt="cart.svg"/>
+                                    </button>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        {% endfor %}
+
+    </div>
+
+    {% include 'products/elements/pagination.html' %}
+
+</div>

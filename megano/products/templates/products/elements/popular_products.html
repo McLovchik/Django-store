@@ -1,0 +1,53 @@
+{% load static %}
+
+<div class="Section Section_column Section_columnDesktop"  >
+  <div class="wrap">
+    <div class="Section-content">
+      <header class="Section-header">
+        <h2 class="Section-title">
+            Popular Products
+        </h2>
+      </header>
+      <div class="Cards">
+          {% for product in popular_products %}
+              <div class="Card">
+                <a class="Card-picture" href="{% url 'product-detail' product.slug %}">
+                    <img src="{{ product.image_url }}" alt="card.jpg"/>
+                </a>
+                <div class="Card-content">
+                    <strong class="Card-title">
+                        <a href="{% url 'product-detail' product.slug %}">
+                            {{ product.name|truncatechars:20 }}
+                        </a>
+                    </strong>
+                    <div class="Card-description">
+                      <div class="Card-cost">
+                          <span class="Card-price">
+                              {{ product.price }} ₽
+                          </span>
+                      </div>
+                      <div class="Card-category">
+                          {{ product.category }}
+                      </div>
+
+                      {% if product.quantity > 0 %}
+                        <div class="Card-hover">
+                            <form action="{% url 'add-product-in-cart' product_id=product.id %}" method="post">
+                                {% csrf_token %}
+                                <input style="display: none;" class="Amount-input form-input" name="amount" type="text" value="1"/>
+
+                              <button style="border-width: 0; cursor: pointer" class="Card-btn" type="submit">
+                                  <img src="{% static 'assets/img/icons/card/cart.svg' %}" alt="cart.svg"/>
+                              </button>
+                            </form>
+                      </div>
+                      {% endif %}
+
+                    </div>
+                </div>
+              </div>
+          {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>

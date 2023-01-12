@@ -1,0 +1,59 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+
+{% block title %}
+  Login
+{% endblock %}
+
+
+{% block links_css %}
+  <link rel="stylesheet" href="{% static 'c_assets/css/c_extra.css' %}">
+{% endblock %}
+
+
+{% block main %}
+
+    <div class="Middle-top">
+        <div class="wrap">
+            <div class="Middle-header">
+                <h1 class="Middle-title">Login</h1>
+                <ul class="breadcrumbs Middle-breadcrumbs">
+                    <li class="breadcrumbs-item"><a href="/">home</a></li>
+                    <li class="breadcrumbs-item breadcrumbs-item_current"><span>Sign-in</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="Section Section_column">
+        <div class="wrap custom-wrap-for-form custom-wrap-for-login-form">
+            <div class="Section-content custom-wrap-s-div-for-form custom-wrap-s-div-for-login-form">
+                <div class="Profile">
+
+                    <form class="form Profile-form custom_login-form" method="post">
+                        {% csrf_token %}
+                        <span class="form-error">{{ form.non_field_errors }}</span>
+                        <div class="form-group custom_login_form-group custom-form-group-for-login">
+                            <label class="form-label" for="{{form.username.id_for_label}}">Email</label>
+                            {{ form.username }}
+                        </div>
+                        <div class="form-group custom_login_form-group">
+                            <label class="form-label" for="password">Password</label>
+                            <input class="form-input" id="password" name="password" type="password" required>
+                            <span class="helptext"><a href="">Forgot the password?</a></span>
+                        </div>
+                        <div class="form-group custom_login_form-group-btns">
+                            <div class="Profile-btn custom_align-center custom-profile-btns-for-login-page">
+                                <button class="btn btn_success custom_login_btn-success" type="submit">Sign in</button>
+                                <a href="{% url 'register' %}" class="btn btn_success custom-register-btn-for-login-page">Register</a>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

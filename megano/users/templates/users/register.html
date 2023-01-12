@@ -1,0 +1,112 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+
+{% block title %}
+  Register
+{% endblock %}
+
+
+{% block links_css %}
+  <link rel="stylesheet" href="{% static 'c_assets/css/c_extra.css' %}">
+{% endblock %}
+
+
+{% block main %}
+
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title">Регистрация
+          </h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item"><a href="index.html">home</a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current"><span>регистрация</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="Section">
+        <div class="wrap custom-wrap-for-form">
+            <div class="Section-content custom-wrap-s-div-for-form">
+                <div class="Profile">
+                    <form class="form Profile-form" enctype="multipart/form-data" method="post">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+
+                        <div class="row">
+                            <div class="row-block custom-row-block-for-form">
+                                <div class="form-group">
+                                    <label class="form-label" for="id_avatar">Avatar</label>
+                                    <div class="Profile-avatar Profile-avatar_noimg">
+                                        <div class="Profile-img"><img src="" alt=""></div>
+                                        <label class="Profile-fileLabel" for="id_avatar">Choose the picture</label>
+                                        <input class="Profile-file form-input" id="id_avatar" name="avatar" type="file" data-validate="onlyImgAvatar">
+                                    </div>
+                                </div>
+                                <div class="name-block custom_register_name-block" style="margin-top: 20px">
+                                    <div class="form-group custom_register_form-group">
+                                        <label class="form-label" for="{{ form.fullname.id_for_label }}">Fullname</label>
+                                        {{ form.fullname }}
+                                        <span class="form-error">{{ form.errors.fullname }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-block">
+                                <div class="form-group require-field">
+                                    <label class="form-label" for="{{ form.email.id_for_label }}">Email*</label>
+                                    {{ form.email }}
+                                    <span class="form-error">{{ form.errors.email }}</span>
+                                </div>
+                                <div class="form-group require-field">
+                                    <label class="form-label" for="password">Password*</label>
+                                    <input class="form-input" id="password" name="password1" type="password" required>
+                                </div>
+                                <div class="form-group require-field">
+                                    <label class="form-label" for="passwordReply">Repeat password*</label>
+                                    <input class="form-input" id="passwordReply" name="password2" type="password" required>
+                                    <span class="form-error">{{ form.errors.password2 }}</span>
+                                </div>
+                                <div class="form-group require-field">
+                                    <label class="form-label" for="id_phone">Phone number*</label>
+                                    {{ form.phone }}
+                                    <span class="form-error">{{ form.errors.phone }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="row-block custom_register_name-block">
+                                <div class="form-group custom_register_city-field" style="margin-top: 20px">
+                                    <label class="form-label" for="{{ form.city.id_for_label }}">City</label>
+                                    {{ form.city }}
+                                    <span class="form-error">{{ form.errors.city }}</span>
+                                </div>
+                                <div class="custom_register_address-field" style="margin-top: 20px">
+                                    <label class="form-label" for="{{ form.address.id_for_label }}">Address</label>
+                                    {{ form.address }}
+                                    <span class="form-error">{{ form.errors.address }}</span>
+                                </div>
+                            </div>
+                            <div class="row-block custom_register_name-block">
+
+                            </div>
+                        </div>
+
+
+                        <div class="form-group custom_register_form-btns" style="margin-top: 30px">
+                            <div class="Profile-btn custom_align-center">
+                                <button class="btn btn_success" type="submit">Register</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
